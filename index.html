@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Greenland Shift Game</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial;
+      background: #0b3d91;
+      color: white;
+    }
+    #meter {
+      width: 80%;
+      height: 30px;
+      background: #ccc;
+      margin: 20px auto;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    #fill {
+      height: 100%;
+      width: 0%;
+      background: red;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      background: cyan;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Greenland Shift Game</h1>
+<p>Stop Greenland from shifting 2 km!</p>
+
+<div id="meter">
+  <div id="fill"></div>
+</div>
+
+<button onclick="reduceShift()">Stop Shift</button>
+<p id="status"></p>
+
+<script>
+let shift = 0;
+let gameOver = false;
+
+function updateMeter() {
+  document.getElementById("fill").style.width = (shift/2)*100 + "%";
+}
+
+function reduceShift() {
+  if (!gameOver) {
+    shift -= 0.1;
+    if (shift < 0) shift = 0;
+    updateMeter();
+  }
+}
+
+setInterval(() => {
+  if (!gameOver) {
+    shift += 0.05;
+    updateMeter();
+
+    if (shift >= 2) {
+      document.getElementById("status").innerText = "Game Over!";
+      gameOver = true;
+    }
+  }
+}, 100);
+
+setTimeout(() => {
+  if (!gameOver) {
+    document.getElementById("status").innerText = "You Win!";
+    gameOver = true;
+  }
+}, 60000);
+</script>
+
+</body>
+</html>
